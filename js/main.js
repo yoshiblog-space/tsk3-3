@@ -5,12 +5,19 @@
   const tbody = document.getElementById('tbody');
 
   let deleteTodo = (deleteRow) => {
-
     todos.splice(deleteRow, 1);
-
     displayTodo(todos);
+  };
 
-  }
+  let changeTodo = (changeRow) => {
+    if(todos[changeRow].status === "作業中"){
+      todos[changeRow].status = "完了";
+    }else{
+      todos[changeRow].status = "作業中";     
+    }
+    displayTodo(todos);
+  };
+
 
 
 
@@ -32,7 +39,13 @@
       
       tdIndex.textContent = idx;
       tdTask.textContent = todo.task;
+
       stateButton.textContent = todo.status;
+      stateButton.addEventListener('click', () => {
+        const changeRow = stateButton.parentNode.parentNode.firstChild.textContent;
+        changeTodo(changeRow);  
+      }); 
+
       delButton.textContent = '削除';
       delButton.addEventListener('click', () => {
 
@@ -49,13 +62,8 @@
       tr.appendChild(tdDelete);
       tbody.appendChild(tr);
 
-
     });
-
-
-
-    
-  }
+  };
   
 
   document.getElementById('btn').addEventListener('click', () => {
@@ -69,9 +77,6 @@
     
     displayTodo(todos);
 
-    });
-
-
-
+  });
 
 }
